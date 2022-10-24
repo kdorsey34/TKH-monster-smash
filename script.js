@@ -38,7 +38,7 @@ function monsterAttack(){
   // 2. how much damage the monster did 
   // 3. how much health the player has 
 }
-
+//cool
 function playRound() {
   //use randomNum to return either 0 or 1
   
