@@ -45,7 +45,10 @@ function playRound() {
   //use randomNum to return either 0 or 1
   let num = randomNum(0,2)
   //0 = player goes first, 1 = monster goes first
-  
+  //truthy and falsy values -> values that evaluate to true or false
+  if(!zeroOrOne){
+    playerAttack;
+  }
   //use if/else to determine who goes first
   if(num === 0){
     playerAttack()
@@ -53,9 +56,9 @@ function playRound() {
     monsterAttack()
   }
   }else{
-    monsterAttack()
+    monsterAttack();
     if(playerHealth > 0){
-      playerAttack()
+      playerAttack();
     }
   }
   //if player goes first, run playerAttack, then if monsterHealth > 0, run monsterAttack
@@ -74,15 +77,15 @@ function playGame() {
   //while loop that runs until player or monster's health is <= 0 
   //add the condition in the while loop parentheses 
   while(playerHealth > 0 && monsterHealth > 0){
-    roundNumber++
+    roundNumber++//counter that you will see in while loops
    //write an alert statement that tells the player what round number it is, and the player's and monster's current health points
  alert(`It is round ${roundNumber}. ${playerName} is at ${playerHealth} points. ${monsterName} is at ${monsterHealth} points.`)
    //call playRound inside the while loop
     playRound()
   }
   //outside of while loop, declare a winner and use alert to show a win or lose message 
-  if(playerHealth <= 0){
-    alert(`${monsterName} wins!`)
+  if(playerHealth > monsterHealth){
+alert(`${playerName} wins! They slayed the ${monsterName}`);0
   }else if(monsterHealth <= 0){
     alert(`${playerName} wins!`)
   }
