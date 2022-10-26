@@ -3,11 +3,11 @@
   //declare a variable named playerName that stores the value the player enters from a prompt
 let playerName = prompt("What is your name?")
   //declare a variable named playerHealth and set it equal to the number value 15
-let playerHealth = 15 
+
   //assign a name of a monster (ex 'Werewolf') as a string to a variable named monsterName
-let monsterName = "Zombie"
+
   //declare a variable named monsterHealth and set it equal to the number value 15
-let monsterHealth = 15 
+
 //random integer function 
 //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function randomNum(min, max) {
@@ -15,6 +15,20 @@ function randomNum(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
   return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
+}
+//Fighter class is parent class to Hero and Monster
+//Fighter contains everything that both Hero and Monster have - method, properties
+class Fighter{
+  constructor(name){
+    this.name = name;
+    this.healthPoints = 15;
+  }
+}
+
+attack(targetObj){
+  let attackPoints = randomNum(1,6);
+  targetObj.healthPoints = targetObj.healthPoints - attackPoints;
+  return `${this.name} attacked ${targetObj.name}! ${this.name} did ${attackPoints} damage. ${targetObj.name} has ${targetObj.healthPoints} health points left`
 }
 
 function playerAttack(){
@@ -28,7 +42,23 @@ monsterHealth = monsterHealth - playerAttackPoints
   // 3. how much health the monster has 
   alert(`${playerName} attack ${monsterName}. ${playerName} did ${playerAttackPoints} damage. ${monsterName} has ${monsterHealth} health.`)
 }
+ class Monster extends Fighter{
+  constructor(name, superPowers){
+    super(name);
+    this.superPowers = superPowers;
+  }
+ }
+ let werewolf = new Monster("Werewolf", "slash with claws")
+ 
 
+ class Hero extends Fighter{
+  constructor(name, weapon){
+    super(name);
+    this.weapon = weapon
+  }
+ }
+ let knight = new Hero("Knight", "sword")
+ 
 function monsterAttack(){
   //use randomNum to generate attack points value between 1 - 5 and save the value to a variable named monsterAttackPoints
 let monsterAttackPoints = randomNum(1,6)
