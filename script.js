@@ -1,5 +1,5 @@
 //global variables, can be accessed by all functions
-
+//
   //declare a variable named playerName that stores the value the player enters from a prompt
   let playerName = prompt("What is your name?")
   //declare a variable named playerHealth and set it equal to the number value 15
