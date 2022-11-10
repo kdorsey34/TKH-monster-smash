@@ -1,7 +1,6 @@
 //global variables, can be accessed by all functions
 
   //declare a variable named playerName that stores the value the player enters from a prompt
-let playerName = prompt("What is your name?")
   //declare a variable named playerHealth and set it equal to the number value 15
 
   //assign a name of a monster (ex 'Werewolf') as a string to a variable named monsterName
@@ -21,71 +20,51 @@ function randomNum(min, max) {
 class Fighter{
   constructor(name){
     this.name = name;
-    this.healthPoints = 15;
+    this.healthPoints = 15
+  }
+  //hero and monster will both have attack method
+  //targetObj is the object representing either Hero or Monster
+  attack(targetObj){
+    let attackPoints = randomNum(1,6);
+    targetObj.healthPoints = targetObj.healthPoints - attackPoints;
+    return `${this.name} attacked ${targetObj.name}! ${this.name} did ${attackPoints} damage. ${targetObj.name} has ${targetObj.healthPoints} health points left`
   }
 }
 
-attack(targetObj){
-  let attackPoints = randomNum(1,6);
-  targetObj.healthPoints = targetObj.healthPoints - attackPoints;
-  return `${this.name} attacked ${targetObj.name}! ${this.name} did ${attackPoints} damage. ${targetObj.name} has ${targetObj.healthPoints} health points left`
-}
-
-function playerAttack(){
-//use randomNum to generate attack points value between 1 - 5 and save the value to a variable named playerAttackPoints
-let playerAttackPoints = randomNum(1,6)
-//subtract playerAttackPoints from monsterHealth and update the monsterHealth variable
-monsterHealth = monsterHealth - playerAttackPoints
-  //use an alert with string template literals to tell the player: 
-  // 1. player attacked monster 
-  // 2. how much damage the player did 
-  // 3. how much health the monster has 
-  alert(`${playerName} attack ${monsterName}. ${playerName} did ${playerAttackPoints} damage. ${monsterName} has ${monsterHealth} health.`)
-}
- class Monster extends Fighter{
+class Monster extends Fighter{
   constructor(name, superPowers){
     super(name);
     this.superPowers = superPowers;
-  }
- }
- let werewolf = new Monster("Werewolf", "slash with claws")
- 
-
- class Hero extends Fighter{
-  constructor(name, weapon){
-    super(name);
-    this.weapon = weapon
-  }
- }
- let knight = new Hero("Knight", "sword")
- 
-function monsterAttack(){
-  //use randomNum to generate attack points value between 1 - 5 and save the value to a variable named monsterAttackPoints
-let monsterAttackPoints = randomNum(1,6)
-  //subtract monsterAttackPoints from playerHealth and update the playerHealth variable 
-playerHealth = playerHealth - monsterAttackPoints
-  //use an alert with string template literals to tell the player: 
-  // 1. monster attacked player 
-  // 2. how much damage the monster did 
-  // 3. how much health the player has
-  alert(`${monsterName} attack ${playerName}. ${monsterName} did ${monsterAttackPoints} damage. ${playerName} has ${playerHealth} health.`)
+  } 
 }
-
-function playRound() {
+ class Hero extends Fighter{
+  constructor(name, weapons){
+    super(name);
+    this.weapons = weapons;
+  }
+ }
+let werewolf = new Monster("Werewolf", "slash with claws")
+let knight = new Hero("Knight", "sword") 
+ 
+function playRound(hero, monster) {
   //use randomNum to return either 0 or 1
   let num = randomNum(0,2)
   //0 = player goes first, 1 = monster goes first
   
   //use if/else to determine who goes first
   if(num === 0){
-    playerAttack()
-  if(monsterHealth > 0){
-    monsterAttack()
-  }
+  let attackMessage =   hero.attack(monster) 
+  alert (attackMessage)
+  if(monster.healthPoints > 0){
+  let attackMessage =  monster.attack(hero)
+  alert (attackMessage)
+}
   }else{
-    monsterAttack()
-    if(playerHealth > 0){
-      playerAttack()
+   let attackMessage = monster.attack(hero)
+   alert (attackMessage)
+    if(hero.healthPoints > 0){
+    let attackMessage =  hero.attack(monster)
+    alert (attackMessage)
     }
   }
   //if player goes first, run playerAttack, then if monsterHealth > 0, run monsterAttack
@@ -93,30 +72,39 @@ function playRound() {
   //if monster goes first, run monsterAttack, then if playerHealth > 0, run playerAttack 
 }
 
-function playGame() {
+function playGame(hero, monster) {
   //beginning game message
   alert(
-    `Hello, ${playerName}! You are fighting ${monsterName}! Your health is at ${playerHealth}, ${monsterName}'s health is at ${monsterHealth}`
+    `Hello, ${hero.name}! You are fighting ${monster.name}! Your health is at ${hero.healthPoints}, ${monster.name}'s health is at ${monster.healthPoints}`
   );
 
  let roundNumber = 0
 
   //while loop that runs until player or monster's health is <= 0 
   //add the condition in the while loop parentheses 
-  while(playerHealth > 0 && monsterHealth > 0){
-    roundNumber++
+  //while takes a condition, while loops as long as the condition evaluates true
+  //run until player or monster has no more health points
+  while(hero.healthPoints > 0 && monster.healthPoints > 0){
+    roundNumber++;
    //write an alert statement that tells the player what round number it is, and the player's and monster's current health points
- alert(`It is round ${roundNumber}. ${playerName} is at ${playerHealth} points. ${monsterName} is at ${monsterHealth} points.`)
+ alert(`It is round ${roundNumber}! ${hero.name} has ${hero.healthPoints} points left. ${monster.name} is at ${monster.healthPoints} points left.`);
+
    //call playRound inside the while loop
-    playRound()
+    playRound(hero, monster);
   }
   //outside of while loop, declare a winner and use alert to show a win or lose message 
-  if(playerHealth <= 0){
-    alert(`${monsterName} wins!`)
-  }else if(monsterHealth <= 0){
-    alert(`${playerName} wins!`)
+
+  //message if the player wins
+  if(hero.healthPoints > monster.healthPoints){
+    alert(`${hero.name} wins! They slayed the ${monster.name} with their ${hero.weapons}`);
+  }
+  else if(monster.healthPoints > hero.healthPoints){
+    alert(`${monster.name} has won by using their super power: ${monster.superPowers}! ${hero.name} has lost :(`);
+  }
+  else{
+    alert(`Seems like ${hero.name} and ${monster.name} are both defeated`);
   }
 }
 
 //call playGame to start game
-playGame()
+playGame(knight, werewolf); 
